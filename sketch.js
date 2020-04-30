@@ -1,46 +1,61 @@
-var radius = 100;
-let x,y;
-let score=0;
-let r,g,b;
+var xBall = Math.floor(Math.random()*300)+50;
+var yBall = 50;
+var diameter=50
+var xBallChange =5;
+var yBallChange =5
+
+var xPaddle;
+var yPaddle;
+var paddleWidth = 100;
+var paddleHeight = 25;
+
+var started = false;
+var score =0;
+
 function setup() {
-  createCanvas(windowWidth,windowHeight);
-  r=random(255);
-  g=random(255);
-  b=random(255);
+  createCanvas(windowWidth, windowHeight);
+
+    xPaddle = windowWidth / 2;
+    yPaddle = windowHeight - 100;
 
 
-  x=random(windowWidth);
-  y=random(windowHeight);
-setInterval(newCircle, 1000);
+
 }
 
 function draw() {
-background(200);
-fill(r,g,b);
+  background(0);
+  fill(255);
+  noStroke();
+  ellipse(xBall,yBall,diameter);
+  text('Score: '+score,10,10);
+  if (xBall < diameter/2 ||
+      xBall > windowWidth - 0.5*diameter) {
+  xBallChange *= -1;
+}
+if (yBall < diameter/2 ||
+     yBall > windowHeight - diameter) {
+  yBallChange *= -1;
+}
+
+if ((xBall > xPaddle &&
+      xBall < xPaddle + paddleWidth) &&
+      (yBall + (diameter/2) >= yPaddle)) {
+  xBallChange *= -1;
+  yBallChange *= -1;
+  score++;
+}
+  xBall +=xBallChange;
+  yBall +=yBallChange;
+
+
+  fill(0, 255, 255);
 noStroke();
-ellipse(x,y,radius*2,radius*2);
-fill(255);
-text('Score: '+ score,10,20);
-
-
-
+rect(xPaddle, yPaddle, paddleWidth, paddleHeight);
 }
-
-
-function mousePressed() {
-  let d = dist(mouseX,mouseY,x,y);
-  if(d<radius){
-    newCircle();
-    score++;
+function keyPressed() {
+  if (keyCode === LEFT_ARROW) {
+    xPaddle -= 50;
+  } else if (keyCode === RIGHT_ARROW) {
+    xPaddle += 50;
   }
-
-}
-function newCircle() {
-  x=random(windowWidth);
-  y=random(windowHeight);
-  r = random(255);
-g = random(255);
-b = random(255);
-
-
 }
