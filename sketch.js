@@ -15,10 +15,11 @@ setInterval(newCircle, 1000);
 }
 
 function draw() {
-background(107);
+background(200);
 fill(r,g,b);
 noStroke();
 ellipse(x,y,radius*2,radius*2);
+fill(255);
 text('Score: '+ score,10,20);
 
 
@@ -32,12 +33,7 @@ function mousePressed() {
     newCircle();
     score++;
   }
-  if (score == 2) {
-      radius /= 2;
-  }
-  if (score == 4) {
-      radius /= 2;
-  }
+
 }
 function newCircle() {
   x=random(windowWidth);
